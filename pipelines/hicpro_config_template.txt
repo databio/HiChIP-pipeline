@@ -13,7 +13,7 @@ RAW_DIR = rawdata
 #######################################################################
 ## SYSTEM - PBS - Start Editing Here !!
 #######################################################################
-N_CPU = 10
+N_CPU = {N_CPU}
 LOGFILE = hicpro.log
 
 PBS_SUFFIX = 
@@ -36,7 +36,7 @@ PAIR2_EXT = _R2
 FORMAT = phred33
 MIN_MAPQ = 0
 
-BOWTIE2_IDX_PATH = /Users/chaodai/Documents/DB/bowtie2Index/hg19
+BOWTIE2_IDX_PATH = /seq/genomes/hg19/indexed_bowtie2/
 BOWTIE2_GLOBAL_OPTIONS = --very-sensitive -L 30 --score-min L,-0.6,-0.2 --end-to-end --reorder
 BOWTIE2_LOCAL_OPTIONS =  --very-sensitive -L 20 --score-min L,-0.6,-0.2 --end-to-end --reorder
 
