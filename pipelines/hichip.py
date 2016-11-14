@@ -84,6 +84,7 @@ cmd2 = "touch " + target
 pm.run([cmd, cmd2], target)
 
 pm.timestamp("### Format output for Juicer")
+# Now format output for juicer
 
 valid_pairs = os.path.join(hicpro_out, "hic_results/data/", args.sample_name, args.sample_name + "_allValidPairs")
 
