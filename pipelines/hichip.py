@@ -46,7 +46,7 @@ pm.timestamp("### Run HiC-Pro")
 hicpro_out = os.path.join(param.outfolder,"hicpro")
 #pm.make_sure_path_exists(hicpro_out)  # don't do this! it stalls hicpro!
 # Re-write hicpro config template
-configfile = "config.txt"
+configfile = "hicpro_config_template.txt"
 import sys
 cfg_template = os.path.join(os.path.dirname(sys.argv[0]), configfile)
 local_hicpro_cfg = os.path.join(param.outfolder, "hicpro_config.txt")
@@ -55,14 +55,27 @@ local_hicpro_cfg = os.path.join(param.outfolder, "hicpro_config.txt")
 variables_dict = {}
 variables_dict["N_CPU"] = pm.cores
 variables_dict["REFERENCE_GENOME"] = args.genome_assembly
+variables_dict["BOWTIE2_IDX_PATH"] = os.path.join(res.genomes, args.genome_assembly, "indexed_bowtie2")
+
+res.chrom_sizes = os.path.join(res.genomes, args.genome_assembly, args.genome_assembly + ".chromSizes")
+variables_dict["GENOME_SIZE"] = res.chrom_sizes 
 
 # hichip wants these in a subfolder...
 fastq_subfolder = os.path.join(fastq_folder, args.sample_name)
 pm.make_sure_path_exists(fastq_subfolder)
 
-#cmd = "ln -s " + out_fastq_pre + "*.fastq" + " " +  fastq_subfolder
-cmd = "ln -rfs " + fastq_folder + "*fastq " + fastq_subfolder
-pm.run(cmd, fastq_subfolder)
+# Superior version provides relative links, but requires coreutils after 2010
+#cmd = "ln -rfs " + fastq_folder + "*fastq " + fastq_subfolder
+#pm.run(cmd, fastq_subfolder)
+
+# Inferior version provides absolute links, but doesn't require modern coreutils.
+import glob
+for fq_file in glob.glob(fastq_folder + "*fastq"):
+	print(fq_file)
+	cmd = "ln -fs " + fq_file + " " + fastq_subfolder
+	pm.run(cmd, lock_name = "ln")
+
+
 
 print("Using template: " + cfg_template + " to produce config " + local_hicpro_cfg)
 with open(cfg_template, 'r') as handle:
@@ -91,7 +104,8 @@ valid_pairs = os.path.join(hicpro_out, "hic_results/data/", args.sample_name, ar
 valid_pairs_out = valid_pairs + "_sorted.gz"
 
 cmd = os.path.join(tools.scripts_dir, "preJuice.py") + " -i " + valid_pairs
-cmd += " | sort --parallel=" + pm.cores
+# --parallel 
+cmd += " | sort "#--parallel=" + str(pm.cores)
 cmd += " -k12,12 - | cut -f12 --complement | gzip - > " + valid_pairs_out
 
 pm.run(cmd, valid_pairs_out)
@@ -102,7 +116,7 @@ cmd = tools.java + " -Xmx" + pm.javamem
 cmd += " -jar " + tools.juiceboxtools
 cmd += " pre " + valid_pairs_out 
 cmd += " " + juicebox_out
-cmd += " " + args.genome_assembly
+cmd += " " + res.chrom_sizes
 
 pm.run(cmd, juicebox_out)
 

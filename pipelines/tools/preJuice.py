@@ -52,8 +52,8 @@ for line in open(args.infile):
 		index = len(interactions) -1
 		eprint(index, interaction_string)
 
-	print_line = "\t".join([str(i), str(str1), str(chr1), str(line[2]), str(i), str(str2),
-	 str(chr2), line[5], str(j), str(30), str(31), str(index)])
+	print_line = "\t".join([str(i), str(str1), "chr" + str(chr1), str(line[2]), str(i), str(str2),
+	 "chr" + str(chr2), line[5], str(j), str(30), str(31), str(index)])
 	print(print_line)
 	#print(str(i) + "\t" + str(str1) + "\t" + str(chr1[3:]) + "\t" + str(line[2]) + "\t" + str(i) + "\t" + str(str2) + "\t" + str(chr2[3:]) + "\t" + line[5] + "\t" 
 #+ str(j) + "\t" + str(30) + "\t" + str(31) + "\t" + str(index) + "\n")

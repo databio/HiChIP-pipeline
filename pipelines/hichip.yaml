@@ -3,21 +3,20 @@
 tools:
 
 # basic tools 
-  java:  /usr/bin/java
+  java:  java
   # absolute paths to required tools
-  juiceboxtools: /home/sheffien/juicebox_tools.7.5.jar
+  juiceboxtools: ${JUICEBOX_TOOLS}
 # public tools 
-  bowtie2:    /seq/bowtie2-2.1.0/bowtie2 
-  samtools:  /usr/local/bin/samtools
-  bedtools: /seq/bedtools-master/bin/bedtools
-  macs2: /usr/bin/macs2
-  MarkDuplicates:  /seq/picard-tools-1.79/MarkDuplicates.jar
-  picard: /seq/picard-tools-1.79/SamToFastq.jar
-  hicpro: /seq/HiC-Pro_2.7.8/bin/HiC-Pro
+  bowtie2:    bowtie2 
+  samtools:  samtools
+  bedtools: bedtools
+  macs2: macs2
+  picard:  $PICARD
+  hicpro: HiC-Pro
 
 # private tools
  # adapterTrim: /usr/local/bin/atacseq_tools/adapterTrimmingModified  
-  trimmo: /home/jinxu/software/Trimmomatic-0.36/trimmomatic-0.36.jar
+  trimmo: $TRIMMOMATIC
   norm_bedGraph:     /seq/scripts/norm_bedGraph.pl 
   pyMakeVplot: /seq/ATAC-seq/Code/pyMakeVplot.py
   fragment_length_dist_pl: /seq/ATAC-seq/Code/fragment_length_dist.pl
@@ -26,7 +25,7 @@ tools:
   bed2bigwig: /seq/ucsc/bedGraphToBigWig
 #User configure 
 resources:
-  genomes: /seq/genomes/
+  genomes: ${GENOMES}
 # reference information set up , using  mm9 for example 
 #  changed using referen prefix 
 #  hard code for hg19 now      

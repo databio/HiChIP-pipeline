@@ -36,7 +36,7 @@ PAIR2_EXT = _R2
 FORMAT = phred33
 MIN_MAPQ = 0
 
-BOWTIE2_IDX_PATH = /seq/genomes/hg19/indexed_bowtie2/
+BOWTIE2_IDX_PATH = {BOWTIE2_IDX_PATH}
 BOWTIE2_GLOBAL_OPTIONS = --very-sensitive -L 30 --score-min L,-0.6,-0.2 --end-to-end --reorder
 BOWTIE2_LOCAL_OPTIONS =  --very-sensitive -L 20 --score-min L,-0.6,-0.2 --end-to-end --reorder
 
@@ -44,8 +44,8 @@ BOWTIE2_LOCAL_OPTIONS =  --very-sensitive -L 20 --score-min L,-0.6,-0.2 --end-to
 ## Annotation files
 #######################################################################
 
-REFERENCE_GENOME = hg19
-GENOME_SIZE = chrom_hg19.sizes
+REFERENCE_GENOME = {REFERENCE_GENOME}
+GENOME_SIZE = {GENOME_SIZE}
 
 
 #######################################################################
