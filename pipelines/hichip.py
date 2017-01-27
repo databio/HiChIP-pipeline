@@ -90,7 +90,7 @@ for key, value in variables_dict.items():
 with open(local_hicpro_cfg, 'w') as handle:
 	handle.write(filedata)
 
-target = os.path.join(hicpro_out, "finished.flag")
+target = os.path.join(hicpro_out, "_completed")
 cmd = tools.hicpro + " -i " + fastq_folder + " -o " + hicpro_out + " -c " + local_hicpro_cfg
 cmd2 = "touch " + target
 
